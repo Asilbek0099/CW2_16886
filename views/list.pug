@@ -8,16 +8,9 @@ block content
     .info.flex  
         .list 
             if event 
-                each event in events 
-                    a(href = events.id) #{events.Name}
+                each events in event
+                    a(href=events.id) #{events.Name}
             a(href = "#") Wedding Ceremony 
             a(href = "#") Birthday party 
             a(href = "#") Anniversary
-
-        .detail 
-            h3 
-
-            p  
-            p  
-            p 
-            p 
+    
