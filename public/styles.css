@@ -1,18 +1,22 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f7f7f7;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   color: #333;
+  margin-bottom: 20px;
 }
 
 table {
@@ -22,7 +26,7 @@ table {
 }
 
 table th, table td {
-  padding: 8px;
+  padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -39,13 +43,14 @@ form {
 label {
   display: block;
   margin-bottom: 8px;
+  font-weight: bold;
 }
 
 input[type='text'],
 input[type='datetime-local'],
 textarea {
-  width: 100%;
-  padding: 8px;
+  width: calc(100% - 22px);
+  padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
   border: 1px solid #ccc;
@@ -53,7 +58,7 @@ textarea {
 }
 
 button {
-  padding: 8px 16px;
+  padding: 10px 20px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -62,7 +67,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #09a7e0;
 }
 
 a {

@@ -12,24 +12,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Render events list
 app.get('/', (req, res) => {
     res.render('index', { events });
 });
 
-// Render form to add new event
 app.get('/events/new', (req, res) => {
     res.render('create');
 });
 
-// Add new event
 app.post('/events', (req, res) => {
     const { name, location, datetime, description } = req.body;
     events.push({ name, location, datetime, description });
     res.redirect('/');
 });
 
-// Render form to edit event
 app.get('/events/edit/:index', (req, res) => {
     const index = req.params.index;
     const event = events[index];
@@ -40,7 +36,6 @@ app.get('/events/edit/:index', (req, res) => {
     }
 });
 
-// Update event
 app.post('/events/update/:index', (req, res) => {
     const index = req.params.index;
     const { name, location, datetime, description } = req.body;
@@ -48,7 +43,6 @@ app.post('/events/update/:index', (req, res) => {
     res.redirect('/');
 });
 
-// Delete event
 app.post('/events/delete/:index', (req, res) => {
     const index = req.params.index;
     if (index >= 0 && index < events.length) {
