@@ -1,21 +1,18 @@
-extends indicate.pug
+extends layout
 
 block content
-    .create
-        form.form(action="/create", method="POST")
-            label.label Name of the Event
-            input.input(type="text", name="NameOfEvent")
-
-            label.label Location
-            input.input(type="text", name="location")
-
-            label.label Description
-            input.input(type="text", name="description")
-
-            label.label Purpose
-            input.input(type="text", name="purpose")
-
-            label.label Date/Time of the Event
-            input.input(type="datetime-local", name="dateOfEvent")
-
-            button.button(type="submit") Add Event
+  h1 Add Event
+  form(action='/events', method='post')
+    label(for='name') Name:
+    input(type='text', name='name', id='name', required)
+    br
+    label(for='location') Location:
+    input(type='text', name='location', id='location', required)
+    br
+    label(for='datetime') Date/Time:
+    input(type='datetime-local', name='datetime', id='datetime', required)
+    br
+    label(for='description') Description:
+    textarea(name='description', id='description', required)
+    br
+    button(type='submit') Submit

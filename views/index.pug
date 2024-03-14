@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 Event Manager
+  if events.length > 0
+    table
+      thead
+        tr
+          th Name
+          th Location
+          th Date/Time
+          th Description
+          th Actions
+      tbody
+        each event, index in events
+          tr
+            td= event.name
+            td= event.location
+            td= event.datetime
+            td= event.description
+            td
+              a(href=`/events/edit/${index}`) Edit
+              form(action=`/events/delete/${index}`, method='post')
+                button(type='submit') Delete
+  else
+    p No events to display
+  a(href='/events/new') Add Event

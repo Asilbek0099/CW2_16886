@@ -1,83 +1,62 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
 const path = require('path');
-const pug = require('pug');
-const url = require('url');
 
+const app = express();
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-  const reqUrl = url.parse(req.url, true);
-  const reqPath = reqUrl.pathname;
+let events = [];
 
-  // Serve static files
-  if (reqPath.startsWith('/public/')) {
-    const filePath = path.join(__dirname, reqPath);
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('File not found');
-      } else {
-        const contentType = getContentType(filePath);
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(data);
-      }
-    });
-    return;
-  }
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
-  if (reqPath === '/') {
-    const created = reqUrl.query.created === 'true';
-    const events = getAll("events");
-    renderTemplate(res, 'index', { created, events });
-  } else if (reqPath === '/list') {
-    const created = reqUrl.query.created === 'true';
-    const events = getAll("events");
-    renderTemplate(res, 'list', { created, events });
-  } else if (reqPath === '/create') {
-    renderTemplate(res, 'create');
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Page not found');
-  }
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Render events list
+app.get('/', (req, res) => {
+    res.render('index', { events });
 });
 
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+// Render form to add new event
+app.get('/events/new', (req, res) => {
+    res.render('create');
 });
 
-function getAll() {
-  try {
-    const data = fs.readFileSync(`./data/event.json`, 'utf8');
-    return JSON.parse(data);
-  } catch (err) {
-    console.error("Error reading file:", err);
-    return [];
-  }
-}
+// Add new event
+app.post('/events', (req, res) => {
+    const { name, location, datetime, description } = req.body;
+    events.push({ name, location, datetime, description });
+    res.redirect('/');
+});
 
-// Function to render a Pug template
-function renderTemplate(res, templateName, data = {}) {
-  const templatePath = path.join(__dirname, 'views', `${templateName}.pug`);
-  fs.readFile(templatePath, 'utf8', (err, templateContent) => {
-    if (err) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('Internal Server Error');
+// Render form to edit event
+app.get('/events/edit/:index', (req, res) => {
+    const index = req.params.index;
+    const event = events[index];
+    if (!event) {
+        res.status(404).send('Event not found');
     } else {
-      const renderedTemplate = pug.render(templateContent, data);
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end(renderedTemplate);
+        res.render('edit', { event, index });
     }
-  });
-}
+});
 
-// Function to get content type based on file extension
-function getContentType(filePath) {
-  const extname = path.extname(filePath);
-  switch (extname) {
-    case '.css':
-      return 'text/css';
-    default:
-      return 'text/plain';
-  }
-}
+// Update event
+app.post('/events/update/:index', (req, res) => {
+    const index = req.params.index;
+    const { name, location, datetime, description } = req.body;
+    events[index] = { name, location, datetime, description };
+    res.redirect('/');
+});
+
+// Delete event
+app.post('/events/delete/:index', (req, res) => {
+    const index = req.params.index;
+    if (index >= 0 && index < events.length) {
+        events.splice(index, 1);
+    }
+    res.redirect('/');
+});
+
+app.listen(port, () => {
+    console.log(`App listening at http://localhost:${port}`);
+});

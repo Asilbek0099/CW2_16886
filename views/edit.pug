@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Edit Event
+  form(action=`/events/update/${index}`, method='post')
+    label(for='name') Name:
+    input(type='text', name='name', id='name', value=event.name, required)
+    br
+    label(for='location') Location:
+    input(type='text', name='location', id='location', value=event.location, required)
+    br
+    label(for='datetime') Date/Time:
+    input(type='datetime-local', name='datetime', id='datetime', value=event.datetime, required)
+    br
+    label(for='description') Description:
+    textarea(name='description', id='description', required)= event.description
+    br
+    button(type='submit') Update
