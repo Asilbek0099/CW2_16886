@@ -10,4 +10,4 @@ Application dependencies list:
 4. Node.js cross-platform
 5. Javascript runtime framework
 
-Here you can see the entire app on my Github repository, to access it go to this link: https://github.com/Asilbek0099/CW2_16886
+Here you can see the entire app on my Github repository, to access it go to this link: https://github.com/Asilbek0099/CW2_16886.git
