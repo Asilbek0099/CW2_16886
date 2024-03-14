@@ -1,0 +1,23 @@
+extends indicate.pug 
+
+block content
+
+    if created 
+        p event created  
+
+    .info.flex  
+        .list 
+            if event 
+                each event in events 
+                    a(href = events.id) #{events.Name}
+            a(href = "#") Wedding Ceremony 
+            a(href = "#") Birthday party 
+            a(href = "#") Anniversary
+
+        .detail 
+            h3 
+
+            p  
+            p  
+            p 
+            p 

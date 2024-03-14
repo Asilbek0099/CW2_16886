@@ -1,0 +1,23 @@
+extends indicate.pug
+
+
+block content 
+
+    .create 
+        form.form(action="/create", method="POST")  
+            label.label Name of an event 
+            input.input(type="text", name="NameOfEvent")
+
+            label.label Location  
+            input.input(type="text", name="location")
+
+            label.label Description   
+            input.input(type="text", name="description")
+
+            label.label Purpose  
+            input.input(type="text", name="purpose")
+
+            label.label Date/Time of an event 
+            input.input(type="datetime", name="dateOfAnEvent")
+            
+            button.button Add Event 
